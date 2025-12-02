@@ -66,6 +66,9 @@ export default {
   '--font-letterspacing-5': '.500em',
   '--font-letterspacing-6': '.750em',
   '--font-letterspacing-7': '1em',
+  '--font-letterspacing-8': '1.25em',
+  '--font-letterspacing-9': '1.5em',
+  '--font-letterspacing-10': '2em',
 
   '--font-size-00': '.5rem',
   '--font-size-0': '.75rem',
@@ -82,4 +85,11 @@ export default {
   '--font-size-fluid-1': 'clamp(1rem, 4vw, 1.5rem)',
   '--font-size-fluid-2': 'clamp(1.5rem, 6vw, 2.5rem)',
   '--font-size-fluid-3': 'clamp(2rem, 9vw, 3.5rem)',
+  '--font-size-fluid-4': 'clamp(2.5rem, 11vw, 4.5rem)',
+  '--font-size-fluid-5': 'clamp(3rem, 13vw, 5.5rem)',
+  '--font-size-fluid-6': 'clamp(3.5rem, 15vw, 6.5rem)',
+  '--font-size-fluid-7': 'clamp(4rem, 17vw, 7.5rem)',
+  '--font-size-fluid-8': 'clamp(4.5rem, 19vw, 8.5rem)',
+  '--font-size-fluid-9': 'clamp(5rem, 21vw, 10rem)',
+  '--font-size-fluid-10': 'clamp(6rem, 25vw, 12rem)',
 };

@@ -18,6 +18,7 @@ import Zindex from '../src/props.zindex.js'
 import MaskEdges from '../src/props.masks.edges.js'
 import MaskCornerCuts from '../src/props.masks.corner-cuts.js'
 import BrandColors from '../src/props.brand-colors.js'
+import ColorsRecursive from '../src/props.colors-recursive.js'
 
 import {buildPropsStylesheet} from './to-stylesheet.js'
 import {toTokens} from './to-tokens.js'
@@ -39,6 +40,7 @@ const mainbundle = {
   [`${pfx}props.shadows.css`]: Shadows,
   [`${pfx}props.aspects.css`]: Aspects,
   [`${pfx}props.colors.css`]: Colors.default,
+  [`${pfx}props.colors-recursive.css`]: ColorsRecursive,
   // [`${pfx}props.svg.css`]: SVG,
   [`${pfx}props.gradients.css`]: Gradients,
   [`${pfx}props.animations.css`]: Animations,
@@ -76,36 +78,36 @@ const jsonbundle = Object.entries({
 }).reverse()
 
 const designtokens = toTokens(jsonbundle)
-const JSONtokens = fs.createWriteStream('../open-props.tokens.json')
+const JSONtokens = fs.createWriteStream('../attuned-props.tokens.json')
 JSONtokens.end(JSON.stringify(Object.fromEntries(designtokens), null, 2))
 
 // gen style-dictionary tokens
 const styledictionarytokens = toStyleDictionary(jsonbundle)
-const StyleDictionaryTokens = fs.createWriteStream('../open-props.style-dictionary-tokens.json')
+const StyleDictionaryTokens = fs.createWriteStream('../attuned-props.style-dictionary-tokens.json')
 StyleDictionaryTokens.end(JSON.stringify(styledictionarytokens, null, 2))
 
 // gen figma tokens
 const figmatokens = toFigmaTokens(jsonbundle)
-const FigmaTokens = fs.createWriteStream('../open-props.figma-tokens.json')
+const FigmaTokens = fs.createWriteStream('../attuned-props.figma-tokens.json')
 FigmaTokens.end(JSON.stringify(figmatokens, null, 2))
 
-const figmatokensSYNC = { 'open-props': { ...figmatokens } }
-const FigmaTokensSync = fs.createWriteStream('../open-props.figma-tokens.sync.json')
+const figmatokensSYNC = { 'attuned-props': { ...figmatokens } }
+const FigmaTokensSync = fs.createWriteStream('../attuned-props.figma-tokens.sync.json')
 FigmaTokensSync.end(JSON.stringify(figmatokensSYNC, null, 2))
 
 if (!fs.existsSync('../dist'))
   fs.mkdirSync('../dist')
 
-const JS = fs.createWriteStream('../dist/open-props.js')
-JS.end(`var OpenProps = ${JSON.stringify(toObject(), null, 2)}`)
+const JS = fs.createWriteStream('../dist/attuned-props.js')
+JS.end(`var AttunedProps = ${JSON.stringify(toObject(), null, 2)}`)
 
-const ES = fs.createWriteStream('../dist/open-props.module.js')
+const ES = fs.createWriteStream('../dist/attuned-props.module.js')
 ES.end(`export default ${JSON.stringify(toObject(), null, 2)}`)
 
-const CJS = fs.createWriteStream('../dist/open-props.cjs')
+const CJS = fs.createWriteStream('../dist/attuned-props.cjs')
 CJS.end(`module.exports = ${JSON.stringify(toObject(), null, 2)}`)
 
-// const UMD = fs.createWriteStream('../dist/open-props.umd.js')
+// const UMD = fs.createWriteStream('../dist/attuned-props.umd.js')
 // UMD.end(`module.exports = ${JSON.stringify(toObject(), null, 2)}`)
 
 

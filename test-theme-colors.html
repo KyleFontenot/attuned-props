@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Colors Test</title>
+
+  <link rel="stylesheet" href="src/props.colors-theme.css">
+
+  <style>
+    /* Define your brand colors */
+    :root {
+      --user-primary: #ff2222;
+      --user-secondary: #00aaff;
+      --user-tertiary: #00cc66;
+      --user-quaternary: #ffaa00;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      background: var(--primary-1);
+      color: var(--primary-10);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    h1 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle {
+      background: var(--quaternary-7);
+      color: white;
+    }
+
+    .theme-toggle:hover {
+      background: var(--quaternary-8);
+    }
+
+    .color-input-wrapper {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--primary-2);
+      border-radius: 8px;
+      border: 2px solid var(--primary-4);
+    }
+
+    .color-input-wrapper h2 {
+      color: var(--primary-9);
+      margin-bottom: 1rem;
+    }
+
+    .color-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .color-input {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .color-input label {
+      font-weight: 600;
+      color: var(--primary-8);
+    }
+
+    .color-input input[type="color"] {
+      width: 100%;
+      height: 50px;
+      border: 2px solid var(--primary-5);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .demo-grid {
+      display: grid;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .spectrum-demo {
+      padding: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .spectrum-demo h3 {
+      margin-bottom: 1rem;
+      color: var(--primary-8);
+    }
+
+    .spectrum {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .spectrum-item {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .usage-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .example-card {
+      padding: 1.5rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .example-1 {
+      background: var(--primary-2);
+      color: var(--primary-9);
+      border: 2px solid var(--primary-5);
+    }
+
+    .example-2 {
+      background: var(--secondary-3);
+      color: var(--secondary-10);
+      border-left: 4px solid var(--secondary);
+    }
+
+    .example-3 {
+      background: var(--tertiary-1);
+      color: var(--tertiary-8);
+    }
+
+    .example-4 {
+      background: var(--quaternary-4);
+      color: var(--quaternary-10);
+    }
+
+    .button-demo {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-6);
+    }
+
+    .btn-secondary {
+      background: var(--secondary-2);
+      color: var(--secondary-9);
+      border: 2px solid var(--secondary-5);
+    }
+
+    .btn-secondary:hover {
+      background: var(--secondary-3);
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+  </div>
+
+  <h1>Theme Colors System Demo</h1>
+  <p>Pure CSS brand colors with automatic tint/shade generation and dark mode adaptation.</p>
+
+  <div class="color-input-wrapper">
+    <h2>Define Your Brand Colors</h2>
+    <p style="margin-bottom: 1rem; color: var(--primary-8);">
+      Pick colors below and watch the entire page adapt instantly!
+    </p>
+    <div class="color-inputs">
+      <div class="color-input">
+        <label for="primary-color">Primary</label>
+        <input type="color" id="primary-color" value="#ff2222" onchange="updateColor('primary', this.value)">
+      </div>
+      <div class="color-input">
+        <label for="secondary-color">Secondary</label>
+        <input type="color" id="secondary-color" value="#00aaff" onchange="updateColor('secondary', this.value)">
+      </div>
+      <div class="color-input">
+        <label for="tertiary-color">Tertiary</label>
+        <input type="color" id="tertiary-color" value="#00cc66" onchange="updateColor('tertiary', this.value)">
+      </div>
+      <div class="color-input">
+        <label for="quaternary-color">Quaternary</label>
+        <input type="color" id="quaternary-color" value="#ffaa00" onchange="updateColor('quaternary', this.value)">
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-grid">
+    <div class="spectrum-demo">
+      <h3>Primary Color Spectrum (0-10)</h3>
+      <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">
+        Lower numbers = backgrounds, Higher numbers = foregrounds. Scale flips in dark mode!
+      </p>
+      <div class="spectrum" id="primary-spectrum"></div>
+    </div>
+
+    <div class="spectrum-demo">
+      <h3>Secondary Color Spectrum (0-10)</h3>
+      <div class="spectrum" id="secondary-spectrum"></div>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 2rem; color: var(--primary-8);">Usage Examples</h2>
+  <div class="usage-examples">
+    <div class="example-card example-1">
+      <h4>Card with Border</h4>
+      <p>background: var(--primary-2)</p>
+      <p>color: var(--primary-9)</p>
+      <p>border: var(--primary-5)</p>
+    </div>
+
+    <div class="example-card example-2">
+      <h4>Alert Card</h4>
+      <p>background: var(--secondary-3)</p>
+      <p>color: var(--secondary-10)</p>
+      <p>border-left: var(--secondary)</p>
+    </div>
+
+    <div class="example-card example-3">
+      <h4>Subtle Background</h4>
+      <p>background: var(--tertiary-1)</p>
+      <p>color: var(--tertiary-8)</p>
+    </div>
+
+    <div class="example-card example-4">
+      <h4>Medium Contrast</h4>
+      <p>background: var(--quaternary-4)</p>
+      <p>color: var(--quaternary-10)</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 2rem;">
+    <h2 style="color: var(--primary-8);">Button Examples</h2>
+    <div class="button-demo">
+      <button class="btn btn-primary">Primary Button</button>
+      <button class="btn btn-secondary">Secondary Button</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const currentScheme = getComputedStyle(root).getPropertyValue('color-scheme');
+      root.style.colorScheme = currentScheme.includes('dark') ? 'light' : 'dark';
+      updateSpectrumDisplays();
+    }
+
+    function updateColor(colorName, value) {
+      document.documentElement.style.setProperty(`--user-${colorName}`, value);
+      updateSpectrumDisplays();
+    }
+
+    function updateSpectrumDisplays() {
+      updateSpectrum('primary');
+      updateSpectrum('secondary');
+    }
+
+    function updateSpectrum(colorName) {
+      const container = document.getElementById(`${colorName}-spectrum`);
+      if (!container) return;
+
+      container.innerHTML = '';
+      for (let i = 0; i <= 10; i++) {
+        const item = document.createElement('div');
+        item.className = 'spectrum-item';
+        const color = getComputedStyle(document.documentElement).getPropertyValue(`--${colorName}-${i}`);
+        item.style.background = color;
+
+        // Determine text color for readability
+        item.style.color = i > 5 ? 'white' : 'black';
+        item.textContent = i;
+        container.appendChild(item);
+      }
+    }
+
+    // Initialize spectrums on load
+    updateSpectrumDisplays();
+  </script>
+</body>
+</html>

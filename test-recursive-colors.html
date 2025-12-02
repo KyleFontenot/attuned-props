@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursive Colors Test</title>
+
+  <!-- Test: Import order matters! -->
+  <!-- Recursive colors imported AFTER will override default colors -->
+  <link rel="stylesheet" href="src/props.colors-hsl.css">
+  <link rel="stylesheet" href="src/props.colors-recursive.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: system-ui, sans-serif;
+    }
+
+    .demo-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .card {
+      padding: 2rem;
+      border-radius: 8px;
+      border: 2px solid hsl(var(--cyan-5-hsl));
+    }
+
+    .card-light-bg {
+      background: hsl(var(--cyan-1-hsl));
+      color: hsl(var(--cyan-11-hsl));
+    }
+
+    .card-medium {
+      background: hsl(var(--cyan-6-hsl));
+      color: white;
+    }
+
+    .card-dark-text {
+      background: white;
+      color: hsl(var(--cyan-10-hsl));
+    }
+
+    h1 {
+      color: hsl(var(--red-8-hsl));
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background: hsl(var(--purple-6-hsl));
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .color-values {
+      font-family: monospace;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.05);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+
+  <h1>Recursive Colors Test</h1>
+  <p>These cards use recursive color variables that automatically adapt to light/dark mode.</p>
+  <p><strong>Toggle dark mode to see the magic!</strong></p>
+
+  <div class="demo-grid">
+    <div class="card card-light-bg">
+      <h3>Light Background Card</h3>
+      <p>Uses <code>--cyan-1-hsl</code> for background</p>
+      <p>Uses <code>--cyan-11-hsl</code> for text</p>
+      <div class="color-values">
+        In light mode: bg is light, text is dark<br>
+        In dark mode: bg is dark, text is light
+      </div>
+    </div>
+
+    <div class="card card-medium">
+      <h3>Medium Accent Card</h3>
+      <p>Uses <code>--cyan-6-hsl</code> for background</p>
+      <p>This middle value works well in both themes</p>
+      <div class="color-values">
+        The middle of the scale stays relatively stable
+      </div>
+    </div>
+
+    <div class="card card-dark-text">
+      <h3>Dark Text Card</h3>
+      <p>Uses <code>--cyan-10-hsl</code> for text</p>
+      <p>White background, colored text</p>
+      <div class="color-values">
+        In light mode: text is dark<br>
+        In dark mode: text is light
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 2rem;">How it works</h2>
+  <div class="card card-light-bg">
+    <h3>Semantic Color Numbers</h3>
+    <p>Lower numbers (0-3) = Background colors</p>
+    <p>Middle numbers (4-8) = Interactive elements</p>
+    <p>Higher numbers (9-12) = Foreground/text colors</p>
+    <p><strong>This meaning stays consistent across themes!</strong></p>
+
+    <div class="color-values">
+      // Light Mode Example<br>
+      --cyan-2-hsl: 186 77% 77%; /* Light tint for backgrounds */<br>
+      <br>
+      // Dark Mode (FLIPPED!)<br>
+      --cyan-2-hsl: 189 84% 23%; /* Dark shade for backgrounds */<br>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const currentScheme = getComputedStyle(root).getPropertyValue('color-scheme');
+
+      if (currentScheme.includes('dark')) {
+        root.style.colorScheme = 'light';
+      } else {
+        root.style.colorScheme = 'dark';
+      }
+    }
+  </script>
+</body>
+</html>

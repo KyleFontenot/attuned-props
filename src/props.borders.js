@@ -4,6 +4,11 @@ export default {
   '--border-size-3': '5px',
   '--border-size-4': '10px',
   '--border-size-5': '25px',
+  '--border-size-6': '40px',
+  '--border-size-7': '60px',
+  '--border-size-8': '85px',
+  '--border-size-9': '115px',
+  '--border-size-10': '150px',
 
   '--radius-1': '2px',
   '--radius-2': '5px',

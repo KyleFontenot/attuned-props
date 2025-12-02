@@ -1,0 +1,225 @@
+@import 'props.media.css';
+
+/*
+  Theme Colors System with Fallbacks
+
+  Define your brand colors in hex, rgb, hsl, or oklch and get automatic
+  tint/shade spectrums that adapt to dark mode.
+
+  Usage:
+  :root {
+    --user-primary: #ff2222;
+    --user-secondary: oklch(0.7 0.2 250);
+    --user-tertiary: rgb(0 204 102);
+    --user-quaternary: hsl(38 100% 50%);
+  }
+
+  Requires color-mix() support (Chrome/Edge 111+, Safari 16.4+, Firefox 113+)
+  For older browsers, colors will fallback to user-defined base colors.
+*/
+
+:where(html) {
+  /* Default base colors (users should override these) */
+  --user-primary: #3b82f6;
+  --user-secondary: #8b5cf6;
+  --user-tertiary: #10b981;
+  --user-quaternary: #f59e0b;
+
+  /* === PRIMARY COLOR SPECTRUM === */
+
+  /* Fallback: Use base color for all levels (older browsers) */
+  --primary-0: var(--user-primary);
+  --primary-1: var(--user-primary);
+  --primary-2: var(--user-primary);
+  --primary-3: var(--user-primary);
+  --primary-4: var(--user-primary);
+  --primary-5: var(--user-primary);
+  --primary: var(--user-primary);
+  --primary-6: var(--user-primary);
+  --primary-7: var(--user-primary);
+  --primary-8: var(--user-primary);
+  --primary-9: var(--user-primary);
+  --primary-10: var(--user-primary);
+
+  /* Same for other theme colors */
+  --secondary-0: var(--user-secondary);
+  --secondary-1: var(--user-secondary);
+  --secondary-2: var(--user-secondary);
+  --secondary-3: var(--user-secondary);
+  --secondary-4: var(--user-secondary);
+  --secondary-5: var(--user-secondary);
+  --secondary: var(--user-secondary);
+  --secondary-6: var(--user-secondary);
+  --secondary-7: var(--user-secondary);
+  --secondary-8: var(--user-secondary);
+  --secondary-9: var(--user-secondary);
+  --secondary-10: var(--user-secondary);
+
+  --tertiary-0: var(--user-tertiary);
+  --tertiary-1: var(--user-tertiary);
+  --tertiary-2: var(--user-tertiary);
+  --tertiary-3: var(--user-tertiary);
+  --tertiary-4: var(--user-tertiary);
+  --tertiary-5: var(--user-tertiary);
+  --tertiary: var(--user-tertiary);
+  --tertiary-6: var(--user-tertiary);
+  --tertiary-7: var(--user-tertiary);
+  --tertiary-8: var(--user-tertiary);
+  --tertiary-9: var(--user-tertiary);
+  --tertiary-10: var(--user-tertiary);
+
+  --quaternary-0: var(--user-quaternary);
+  --quaternary-1: var(--user-quaternary);
+  --quaternary-2: var(--user-quaternary);
+  --quaternary-3: var(--user-quaternary);
+  --quaternary-4: var(--user-quaternary);
+  --quaternary-5: var(--user-quaternary);
+  --quaternary: var(--user-quaternary);
+  --quaternary-6: var(--user-quaternary);
+  --quaternary-7: var(--user-quaternary);
+  --quaternary-8: var(--user-quaternary);
+  --quaternary-9: var(--user-quaternary);
+  --quaternary-10: var(--user-quaternary);
+}
+
+/* Modern browsers with color-mix() support */
+@supports (background: color-mix(in oklch, red, blue)) {
+  :where(html) {
+    /* === PRIMARY COLOR SPECTRUM === */
+    /* Level 5 = base color */
+    --primary-5: var(--user-primary);
+    --primary: var(--primary-5);
+
+    /* Levels 0-4: Lighter tints (for backgrounds in light mode) */
+    --primary-0: color-mix(in oklch, var(--primary-5) 5%, white);
+    --primary-1: color-mix(in oklch, var(--primary-5) 10%, white);
+    --primary-2: color-mix(in oklch, var(--primary-5) 25%, white);
+    --primary-3: color-mix(in oklch, var(--primary-5) 40%, white);
+    --primary-4: color-mix(in oklch, var(--primary-5) 70%, white);
+
+    /* Levels 6-10: Darker shades (for foregrounds in light mode) */
+    --primary-6: color-mix(in oklch, var(--primary-5) 85%, black);
+    --primary-7: color-mix(in oklch, var(--primary-5) 70%, black);
+    --primary-8: color-mix(in oklch, var(--primary-5) 55%, black);
+    --primary-9: color-mix(in oklch, var(--primary-5) 40%, black);
+    --primary-10: color-mix(in oklch, var(--primary-5) 25%, black);
+
+    /* === SECONDARY COLOR SPECTRUM === */
+    --secondary-5: var(--user-secondary);
+    --secondary: var(--secondary-5);
+
+    --secondary-0: color-mix(in oklch, var(--secondary-5) 5%, white);
+    --secondary-1: color-mix(in oklch, var(--secondary-5) 10%, white);
+    --secondary-2: color-mix(in oklch, var(--secondary-5) 25%, white);
+    --secondary-3: color-mix(in oklch, var(--secondary-5) 40%, white);
+    --secondary-4: color-mix(in oklch, var(--secondary-5) 70%, white);
+
+    --secondary-6: color-mix(in oklch, var(--secondary-5) 85%, black);
+    --secondary-7: color-mix(in oklch, var(--secondary-5) 70%, black);
+    --secondary-8: color-mix(in oklch, var(--secondary-5) 55%, black);
+    --secondary-9: color-mix(in oklch, var(--secondary-5) 40%, black);
+    --secondary-10: color-mix(in oklch, var(--secondary-5) 25%, black);
+
+    /* === TERTIARY COLOR SPECTRUM === */
+    --tertiary-5: var(--user-tertiary);
+    --tertiary: var(--tertiary-5);
+
+    --tertiary-0: color-mix(in oklch, var(--tertiary-5) 5%, white);
+    --tertiary-1: color-mix(in oklch, var(--tertiary-5) 10%, white);
+    --tertiary-2: color-mix(in oklch, var(--tertiary-5) 25%, white);
+    --tertiary-3: color-mix(in oklch, var(--tertiary-5) 40%, white);
+    --tertiary-4: color-mix(in oklch, var(--tertiary-5) 70%, white);
+
+    --tertiary-6: color-mix(in oklch, var(--tertiary-5) 85%, black);
+    --tertiary-7: color-mix(in oklch, var(--tertiary-5) 70%, black);
+    --tertiary-8: color-mix(in oklch, var(--tertiary-5) 55%, black);
+    --tertiary-9: color-mix(in oklch, var(--tertiary-5) 40%, black);
+    --tertiary-10: color-mix(in oklch, var(--tertiary-5) 25%, black);
+
+    /* === QUATERNARY COLOR SPECTRUM === */
+    --quaternary-5: var(--user-quaternary);
+    --quaternary: var(--quaternary-5);
+
+    --quaternary-0: color-mix(in oklch, var(--quaternary-5) 5%, white);
+    --quaternary-1: color-mix(in oklch, var(--quaternary-5) 10%, white);
+    --quaternary-2: color-mix(in oklch, var(--quaternary-5) 25%, white);
+    --quaternary-3: color-mix(in oklch, var(--quaternary-5) 40%, white);
+    --quaternary-4: color-mix(in oklch, var(--quaternary-5) 70%, white);
+
+    --quaternary-6: color-mix(in oklch, var(--quaternary-5) 85%, black);
+    --quaternary-7: color-mix(in oklch, var(--quaternary-5) 70%, black);
+    --quaternary-8: color-mix(in oklch, var(--quaternary-5) 55%, black);
+    --quaternary-9: color-mix(in oklch, var(--quaternary-5) 40%, black);
+    --quaternary-10: color-mix(in oklch, var(--quaternary-5) 25%, black);
+  }
+
+  @media (--OSdark) {
+    :where(html) {
+      /* Dark mode: Darken and desaturate the base colors slightly */
+      --primary-5-dark-base: color-mix(in oklch, var(--user-primary) 85%, black);
+      --primary-5: color-mix(in oklch, var(--primary-5-dark-base) 92%, gray);
+
+      --secondary-5-dark-base: color-mix(in oklch, var(--user-secondary) 85%, black);
+      --secondary-5: color-mix(in oklch, var(--secondary-5-dark-base) 92%, gray);
+
+      --tertiary-5-dark-base: color-mix(in oklch, var(--user-tertiary) 85%, black);
+      --tertiary-5: color-mix(in oklch, var(--tertiary-5-dark-base) 92%, gray);
+
+      --quaternary-5-dark-base: color-mix(in oklch, var(--user-quaternary) 85%, black);
+      --quaternary-5: color-mix(in oklch, var(--quaternary-5-dark-base) 92%, gray);
+
+      /* === PRIMARY: FLIPPED SCALE === */
+      /* In dark mode: Lower numbers = darker (backgrounds), Higher numbers = lighter (foregrounds) */
+      --primary-0: color-mix(in oklch, var(--primary-5) 25%, black);
+      --primary-1: color-mix(in oklch, var(--primary-5) 40%, black);
+      --primary-2: color-mix(in oklch, var(--primary-5) 55%, black);
+      --primary-3: color-mix(in oklch, var(--primary-5) 70%, black);
+      --primary-4: color-mix(in oklch, var(--primary-5) 85%, black);
+
+      --primary-6: color-mix(in oklch, var(--primary-5) 70%, white);
+      --primary-7: color-mix(in oklch, var(--primary-5) 40%, white);
+      --primary-8: color-mix(in oklch, var(--primary-5) 25%, white);
+      --primary-9: color-mix(in oklch, var(--primary-5) 10%, white);
+      --primary-10: color-mix(in oklch, var(--primary-5) 5%, white);
+
+      /* === SECONDARY: FLIPPED SCALE === */
+      --secondary-0: color-mix(in oklch, var(--secondary-5) 25%, black);
+      --secondary-1: color-mix(in oklch, var(--secondary-5) 40%, black);
+      --secondary-2: color-mix(in oklch, var(--secondary-5) 55%, black);
+      --secondary-3: color-mix(in oklch, var(--secondary-5) 70%, black);
+      --secondary-4: color-mix(in oklch, var(--secondary-5) 85%, black);
+
+      --secondary-6: color-mix(in oklch, var(--secondary-5) 70%, white);
+      --secondary-7: color-mix(in oklch, var(--secondary-5) 40%, white);
+      --secondary-8: color-mix(in oklch, var(--secondary-5) 25%, white);
+      --secondary-9: color-mix(in oklch, var(--secondary-5) 10%, white);
+      --secondary-10: color-mix(in oklch, var(--secondary-5) 5%, white);
+
+      /* === TERTIARY: FLIPPED SCALE === */
+      --tertiary-0: color-mix(in oklch, var(--tertiary-5) 25%, black);
+      --tertiary-1: color-mix(in oklch, var(--tertiary-5) 40%, black);
+      --tertiary-2: color-mix(in oklch, var(--tertiary-5) 55%, black);
+      --tertiary-3: color-mix(in oklch, var(--tertiary-5) 70%, black);
+      --tertiary-4: color-mix(in oklch, var(--tertiary-5) 85%, black);
+
+      --tertiary-6: color-mix(in oklch, var(--tertiary-5) 70%, white);
+      --tertiary-7: color-mix(in oklch, var(--tertiary-5) 40%, white);
+      --tertiary-8: color-mix(in oklch, var(--tertiary-5) 25%, white);
+      --tertiary-9: color-mix(in oklch, var(--tertiary-5) 10%, white);
+      --tertiary-10: color-mix(in oklch, var(--tertiary-5) 5%, white);
+
+      /* === QUATERNARY: FLIPPED SCALE === */
+      --quaternary-0: color-mix(in oklch, var(--quaternary-5) 25%, black);
+      --quaternary-1: color-mix(in oklch, var(--quaternary-5) 40%, black);
+      --quaternary-2: color-mix(in oklch, var(--quaternary-5) 55%, black);
+      --quaternary-3: color-mix(in oklch, var(--quaternary-5) 70%, black);
+      --quaternary-4: color-mix(in oklch, var(--quaternary-5) 85%, black);
+
+      --quaternary-6: color-mix(in oklch, var(--quaternary-5) 70%, white);
+      --quaternary-7: color-mix(in oklch, var(--quaternary-5) 40%, white);
+      --quaternary-8: color-mix(in oklch, var(--quaternary-5) 25%, white);
+      --quaternary-9: color-mix(in oklch, var(--quaternary-5) 10%, white);
+      --quaternary-10: color-mix(in oklch, var(--quaternary-5) 5%, white);
+    }
+  }
+}

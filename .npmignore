@@ -1,5 +1,28 @@
+# Build tools and scripts
+build/
+node_modules/
+.github/
+
+# Firebase
 .firebaserc
-.github
 firebase.json
+
+# Documentation and examples
 docsite/
 test/
+test-*.html
+
+# Development files
+.gitignore
+.editorconfig
+tsconfig.json
+
+# Hidden files
+.*
+!.npmignore
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

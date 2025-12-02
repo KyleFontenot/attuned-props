@@ -5,11 +5,11 @@ export const buildPropsStylesheet = ({filename,props}, {selector,prefix}) => {
 
   let appendedMeta = ''
 
-  if (filename.includes('shadows') || filename.includes('animations')) {
+  if (filename.includes('shadows') || filename.includes('animations') || filename.includes('colors-recursive')) {
     file.write(`@import 'props.media.css';\n\n`)
   }
 
-  if (filename.includes('shadows')) {
+  if (filename.includes('shadows') || filename.includes('colors-recursive')) {
     let dark_propsMeta = ``
     let dark_props = Object.entries(props)
       .filter(([prop, val]) =>

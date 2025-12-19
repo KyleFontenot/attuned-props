@@ -1,35 +1,145 @@
 // Recursive/Contextual Color System
-// Lower numbers = lighter/background colors in light mode
-// Lower numbers = darker/background colors in dark mode (FLIPPED)
-// This maintains semantic consistency across themes
+// --color-0 (or --color) = Most saturated primary color
+// Light mode: positive indices (1-10) = shades (background tones)
+//             negative indices (--1 to --10) = tints (foreground tones)
+// Dark mode: positive indices (1-10) = tints (background tones)
+//            negative indices (--1 to --10) = shades (foreground tones)
 
 import * as ColorsHSL from './props.colors-hsl.js'
 
-// Helper to extract color entries and create reversed dark mode versions
+// Helper to parse HSL string and return components
+const parseHSL = (hslString) => {
+  const parts = hslString.trim().split(/\s+/)
+  return {
+    h: parseFloat(parts[0]),
+    s: parseFloat(parts[1]),
+    l: parseFloat(parts[2])
+  }
+}
+
+// Helper to create HSL string from components
+const toHSL = ({h, s, l}) => {
+  return `${Math.round(h)} ${Math.round(s)}% ${Math.round(l)}%`
+}
+
+// Helper to lighten a color (tint) - mix with --base-white
+const lighten = (hslString, amount) => {
+  // Convert amount to percentage for color-mix (amount * 5 gives good results)
+  const percentage = Math.min(95, amount * 5)
+  return `color-mix(in oklch, hsl(${hslString}), var(--base-white) ${percentage}%)`
+}
+
+// Helper to darken a color (shade) - mix with --base-black
+const darken = (hslString, amount) => {
+  // Convert amount to percentage for color-mix (amount * 5 gives good results)
+  const percentage = Math.min(95, amount * 5)
+  return `color-mix(in oklch, hsl(${hslString}), var(--base-black) ${percentage}%)`
+}
+
+// Helper to extract color entries and create new recursive scale
 const createRecursiveColors = (colorObject) => {
   const entries = Object.entries(colorObject)
   const result = {}
 
-  // Light mode - use as-is
-  entries.forEach(([key, value]) => {
-    result[key] = value
+  // Find the most saturated color with lightness closest to 50%
+  // This gives us the most vivid, balanced version of the color
+  let primaryIndex = 0
+  let bestScore = -Infinity
+
+  entries.forEach(([key, value], index) => {
+    const {s, l} = parseHSL(value)
+    // Score based on: high saturation + lightness close to 50%
+    // Higher saturation is better, closer to 50% lightness is better
+    const lightnessScore = 50 - Math.abs(l - 50) // Max 50 when l=50, decreases as we move away
+    const score = s + lightnessScore
+
+    if (score > bestScore) {
+      bestScore = score
+      primaryIndex = index
+    }
   })
 
-  // Dark mode - reverse the scale
-  // If a color goes 0-12, then in dark mode:
-  // 0 gets the value of 12, 1 gets value of 11, etc.
-  const maxIndex = entries.length - 1
-  entries.forEach(([key, value], index) => {
-    const reversedIndex = maxIndex - index
-    const reversedValue = entries[reversedIndex][1]
-    result[`${key}-@media:dark`] = reversedValue
-  })
+  // Extract color name from key like '--gray-0-hsl' -> 'gray'
+  const colorName = entries[0][0].match(/--([a-z]+)-/)[1]
+  const primaryColor = entries[primaryIndex][1]
+
+  // Set primary color as base (--color-0 and --color)
+  result[`--${colorName}-0-hsl`] = primaryColor
+  result[`--${colorName}-hsl`] = primaryColor
+
+  // Light mode: Positive indices (1-10) are shades (darker, for backgrounds)
+  // We'll use the darker colors from the original scale (indices 9-12)
+  // and interpolate for additional steps
+  const darkColors = [
+    entries[9][1],   // --color-1
+    entries[10][1],  // --color-2
+    entries[11][1],  // --color-3
+    entries[12][1],  // --color-4
+  ]
+
+  for (let i = 1; i <= 10; i++) {
+    if (i <= 4) {
+      result[`--${colorName}-${i}-hsl`] = darkColors[i - 1]
+    } else {
+      // Darken further beyond the available scale
+      result[`--${colorName}-${i}-hsl`] = darken(darkColors[3], (i - 4) * 5)
+    }
+  }
+
+  // Light mode: Negative indices (--1 to --10) are tints (lighter, for foregrounds)
+  // We'll use the lighter colors from the original scale (indices 7, 6, 5, 4, 3, 2, 1, 0)
+  const lightColors = [
+    entries[7][1],   // --color--1
+    entries[6][1],   // --color--2
+    entries[5][1],   // --color--3
+    entries[4][1],   // --color--4
+    entries[3][1],   // --color--5
+    entries[2][1],   // --color--6
+    entries[1][1],   // --color--7
+    entries[0][1],   // --color--8
+  ]
+
+  for (let i = 1; i <= 10; i++) {
+    if (i <= 8) {
+      result[`--${colorName}--${i}-hsl`] = lightColors[i - 1]
+    } else {
+      // Lighten further beyond the available scale
+      result[`--${colorName}--${i}-hsl`] = lighten(lightColors[7], (i - 8) * 5)
+    }
+  }
+
+  // Dark mode: FLIP the meanings
+  // Primary stays the same
+  result[`--${colorName}-0-hsl-@media:dark`] = primaryColor
+  result[`--${colorName}-hsl-@media:dark`] = primaryColor
+
+  // Dark mode: Positive indices (1-10) are tints (lighter, for backgrounds on dark)
+  for (let i = 1; i <= 10; i++) {
+    if (i <= 8) {
+      result[`--${colorName}-${i}-hsl-@media:dark`] = lightColors[i - 1]
+    } else {
+      result[`--${colorName}-${i}-hsl-@media:dark`] = lighten(lightColors[7], (i - 8) * 5)
+    }
+  }
+
+  // Dark mode: Negative indices (--1 to --10) are shades (darker, for foregrounds on dark)
+  for (let i = 1; i <= 10; i++) {
+    if (i <= 4) {
+      result[`--${colorName}--${i}-hsl-@media:dark`] = darkColors[i - 1]
+    } else {
+      result[`--${colorName}--${i}-hsl-@media:dark`] = darken(darkColors[3], (i - 4) * 5)
+    }
+  }
 
   return result
 }
 
 // Process all color hues
 const recursiveColors = {
+  // Base colors for mixing - users can override these to add warmth/coolness
+  '--base-white': 'hsl(0 0% 100%)',
+  '--base-black': 'hsl(0 0% 0%)',
+
   ...createRecursiveColors(ColorsHSL.Gray),
   ...createRecursiveColors(ColorsHSL.Stone),
   ...createRecursiveColors(ColorsHSL.Red),

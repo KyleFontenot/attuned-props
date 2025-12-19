@@ -26,26 +26,29 @@
     .card {
       padding: 2rem;
       border-radius: 8px;
-      border: 2px solid hsl(var(--cyan-5-hsl));
+      border: 2px solid hsl(var(--cyan-0-hsl));
     }
 
+    /* Background uses positive indices (shades in light, tints in dark) */
     .card-light-bg {
-      background: hsl(var(--cyan-1-hsl));
-      color: hsl(var(--cyan-11-hsl));
+      background: hsl(var(--cyan-3-hsl));
+      color: hsl(var(--cyan--5-hsl));
     }
 
-    .card-medium {
-      background: hsl(var(--cyan-6-hsl));
+    /* Primary color usage */
+    .card-primary {
+      background: hsl(var(--purple-0-hsl));
       color: white;
     }
 
-    .card-dark-text {
-      background: white;
-      color: hsl(var(--cyan-10-hsl));
+    /* Foreground uses negative indices (tints in light, shades in dark) */
+    .card-text-emphasis {
+      background: hsl(var(--red-5-hsl));
+      color: hsl(var(--red--8-hsl));
     }
 
     h1 {
-      color: hsl(var(--red-8-hsl));
+      color: hsl(var(--red-0-hsl));
     }
 
     .theme-toggle {
@@ -53,7 +56,7 @@
       top: 1rem;
       right: 1rem;
       padding: 0.5rem 1rem;
-      background: hsl(var(--purple-6-hsl));
+      background: hsl(var(--purple-0-hsl));
       color: white;
       border: none;
       border-radius: 4px;
@@ -68,60 +71,131 @@
       background: rgba(0,0,0,0.05);
       border-radius: 4px;
     }
+
+    .color-swatch {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .swatch {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
 
-  <h1>Recursive Colors Test</h1>
-  <p>These cards use recursive color variables that automatically adapt to light/dark mode.</p>
+  <h1>Recursive Colors Test - New System</h1>
+  <p>These cards use the new recursive color system with semantic positive and negative indices.</p>
   <p><strong>Toggle dark mode to see the magic!</strong></p>
 
   <div class="demo-grid">
     <div class="card card-light-bg">
-      <h3>Light Background Card</h3>
-      <p>Uses <code>--cyan-1-hsl</code> for background</p>
-      <p>Uses <code>--cyan-11-hsl</code> for text</p>
+      <h3>Background Card</h3>
+      <p>Background: <code>--cyan-3-hsl</code> (positive = shade in light, tint in dark)</p>
+      <p>Text: <code>--cyan--5-hsl</code> (negative = tint in light, shade in dark)</p>
       <div class="color-values">
-        In light mode: bg is light, text is dark<br>
-        In dark mode: bg is dark, text is light
+        Light mode: bg is darker shade, text is lighter tint<br>
+        Dark mode: bg is lighter tint, text is darker shade
       </div>
     </div>
 
-    <div class="card card-medium">
-      <h3>Medium Accent Card</h3>
-      <p>Uses <code>--cyan-6-hsl</code> for background</p>
-      <p>This middle value works well in both themes</p>
+    <div class="card card-primary">
+      <h3>Primary Color</h3>
+      <p>Uses <code>--purple-0-hsl</code> (most saturated)</p>
+      <p>Also available as <code>--purple-hsl</code></p>
       <div class="color-values">
-        The middle of the scale stays relatively stable
+        The -0 or base is the most vibrant saturated color.<br>
+        Same in both light and dark mode.
       </div>
     </div>
 
-    <div class="card card-dark-text">
-      <h3>Dark Text Card</h3>
-      <p>Uses <code>--cyan-10-hsl</code> for text</p>
-      <p>White background, colored text</p>
+    <div class="card card-text-emphasis">
+      <h3>Emphasis Card</h3>
+      <p>Background: <code>--red-5-hsl</code></p>
+      <p>Text: <code>--red--8-hsl</code></p>
       <div class="color-values">
-        In light mode: text is dark<br>
-        In dark mode: text is light
+        Positive indices = background tones<br>
+        Negative indices = foreground tones
       </div>
     </div>
   </div>
 
   <h2 style="margin-top: 2rem;">How it works</h2>
   <div class="card card-light-bg">
-    <h3>Semantic Color Numbers</h3>
-    <p>Lower numbers (0-3) = Background colors</p>
-    <p>Middle numbers (4-8) = Interactive elements</p>
-    <p>Higher numbers (9-12) = Foreground/text colors</p>
-    <p><strong>This meaning stays consistent across themes!</strong></p>
+    <h3>New Semantic Color System</h3>
+    <p><strong>--color-0 or --color</strong> = Most saturated primary color</p>
+    <p><strong>Positive (1-10)</strong> = Background tones (shades in light, tints in dark)</p>
+    <p><strong>Negative (--1 to --10)</strong> = Foreground tones (tints in light, shades in dark)</p>
+    <p><strong>This creates natural contrast across themes!</strong></p>
 
     <div class="color-values">
       // Light Mode Example<br>
-      --cyan-2-hsl: 186 77% 77%; /* Light tint for backgrounds */<br>
+      --cyan-0-hsl: [most saturated]<br>
+      --cyan-3-hsl: [shade - darker for backgrounds]<br>
+      --cyan--5-hsl: [tint - lighter for foregrounds]<br>
       <br>
-      // Dark Mode (FLIPPED!)<br>
-      --cyan-2-hsl: 189 84% 23%; /* Dark shade for backgrounds */<br>
+      // Dark Mode (FLIPPED meanings!)<br>
+      --cyan-0-hsl: [same - most saturated]<br>
+      --cyan-3-hsl: [tint - lighter for backgrounds on dark]<br>
+      --cyan--5-hsl: [shade - darker for foregrounds on dark]<br>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 2rem;">Color Scale Demo</h2>
+  <div class="card">
+    <h3>Cyan Scale Visualization</h3>
+    <h4>Negative indices (foreground tones):</h4>
+    <div class="color-swatch">
+      <div class="swatch" style="background: hsl(var(--cyan--10-hsl)); color: hsl(var(--cyan-5-hsl));">--10</div>
+      <div class="swatch" style="background: hsl(var(--cyan--8-hsl)); color: hsl(var(--cyan-5-hsl));">--8</div>
+      <div class="swatch" style="background: hsl(var(--cyan--6-hsl)); color: hsl(var(--cyan-5-hsl));">--6</div>
+      <div class="swatch" style="background: hsl(var(--cyan--4-hsl)); color: hsl(var(--cyan-5-hsl));">--4</div>
+      <div class="swatch" style="background: hsl(var(--cyan--2-hsl)); color: hsl(var(--cyan-5-hsl));">--2</div>
+    </div>
+    <h4 style="margin-top: 1rem;">Primary (0):</h4>
+    <div class="color-swatch">
+      <div class="swatch" style="background: hsl(var(--cyan-0-hsl)); color: white;">0</div>
+    </div>
+    <h4 style="margin-top: 1rem;">Positive indices (background tones):</h4>
+    <div class="color-swatch">
+      <div class="swatch" style="background: hsl(var(--cyan-2-hsl)); color: hsl(var(--cyan--8-hsl));">2</div>
+      <div class="swatch" style="background: hsl(var(--cyan-4-hsl)); color: hsl(var(--cyan--8-hsl));">4</div>
+      <div class="swatch" style="background: hsl(var(--cyan-6-hsl)); color: hsl(var(--cyan--8-hsl));">6</div>
+      <div class="swatch" style="background: hsl(var(--cyan-8-hsl)); color: hsl(var(--cyan--8-hsl));">8</div>
+      <div class="swatch" style="background: hsl(var(--cyan-10-hsl)); color: hsl(var(--cyan--8-hsl));">10</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 2rem;">Customizing Base Colors</h2>
+  <div class="card card-light-bg">
+    <h3>Using --base-white and --base-black</h3>
+    <p>You can customize the base colors to add warmth or coolness to your entire palette!</p>
+
+    <div class="color-values">
+      /* Default (neutral) */<br>
+      --base-white: hsl(0 0% 100%);<br>
+      --base-black: hsl(0 0% 0%);<br>
+      <br>
+      /* Warm palette - add orange/yellow tint */<br>
+      --base-white: hsl(40 50% 98%);<br>
+      --base-black: hsl(25 30% 5%);<br>
+      <br>
+      /* Cool palette - add blue tint */<br>
+      --base-white: hsl(210 30% 98%);<br>
+      --base-black: hsl(220 40% 5%);<br>
+      <br>
+      /* The extended shades/tints (indices 5-10, --5 to --10) */<br>
+      /* will use color-mix() with these base colors, */<br>
+      /* preserving your chosen warmth/coolness throughout! */<br>
     </div>
   </div>
 

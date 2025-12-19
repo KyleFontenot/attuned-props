@@ -7,7 +7,7 @@
   "description": "Extended CSS custom properties library forked from open-props, featuring recursive color palettes, theme colors with auto dark mode, and extended variable ranges",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kfontenot/attuned-props"
+    "url": "https://github.com/KyleFontenot/attuned-props"
   },
   "keywords": [
     "css",
